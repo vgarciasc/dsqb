@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 742385605}
   m_Layer: 0
   m_Name: GameController
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -375,8 +375,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c696bdbaa040347ae164fa6d4966c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choiceContainer: {fileID: 0}
-  choicePrefab: {fileID: 0}
+  choiceContainer: {fileID: 1051412281}
+  choicePrefab: {fileID: 1850939704409396, guid: 2010203c67d320b42800ebbe95d8d283,
+    type: 2}
   dialogText: {fileID: 1241956358}
   inkFile: {fileID: 4900000, guid: 6cf48bb6d89824cc69e35b43f9a1aca6, type: 3}
 --- !u!1 &892710444

@@ -24,6 +24,10 @@ public class DialogManager : MonoBehaviour {
 	bool text_running = false;
 	bool dialog_active = false;
 
+	public static DialogManager Get_Dialog_Manager() {
+		return (DialogManager) HushPuppy.safeFindComponent("GameController", "DialogManager");
+	}
+
 	void Start() {
 		StartCoroutine(Show_Ink(inkFile));
 	}
@@ -50,14 +54,11 @@ public class DialogManager : MonoBehaviour {
 				}
 				else {
 					yield return Display_Choices(inkStory.currentChoices);
-					continue;
 				}
 			}
 
 			var verse = inkStory.Continue();
-			
 			yield return Display_String(verse, 2);
-
 			yield return new WaitUntil(() => next_dialog);
 
 			next_dialog = false;
@@ -80,15 +81,34 @@ public class DialogManager : MonoBehaviour {
 			yield return HushPuppy.WaitForEndOfFrames(speed);
 		}
 
+		skip_display = false;
 		text_running = false;
 		dialogText.text = text;
 	}
 
-	IEnumerator Display_Choices(List<Choice> choices) {
-		yield break;
-	}
+	#region choices
 
-	public void Select_Choice(int index) {
+		bool choice_selected = false;
 
-	}
+		IEnumerator Display_Choices(List<Choice> choices) {
+			for (int i = 0; i < choices.Count; i++) {
+				GameObject choice = Instantiate(choicePrefab, choiceContainer.transform, false);
+				choice.GetComponentInChildren<ChoiceBox>().Initialize(i);
+				choice.GetComponentInChildren<TextMeshProUGUI>().text = choices[i].text;
+			}
+			
+			yield return new WaitUntil(() => choice_selected);
+			choice_selected = false;
+		}
+
+		public void Select_Choice(int index) {
+			if (inkStory.currentChoices.Count > 0) {
+				inkStory.ChooseChoiceIndex(index);
+				choice_selected = true;
+			}
+
+			HushPuppy.destroyChildren(choiceContainer);
+		}
+
+	#endregion
 }
