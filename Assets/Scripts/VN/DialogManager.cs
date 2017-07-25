@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
@@ -33,7 +34,7 @@ public class DialogManager : MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.E) && dialog_active) {
+		if (Input.GetButtonDown("Fire1") && dialog_active) {
 			if (text_running) {
 				skip_display = true;
 			}
@@ -93,6 +94,11 @@ public class DialogManager : MonoBehaviour {
 		IEnumerator Display_Choices(List<Choice> choices) {
 			for (int i = 0; i < choices.Count; i++) {
 				GameObject choice = Instantiate(choicePrefab, choiceContainer.transform, false);
+				if (i == 0) {
+					yield return new WaitForEndOfFrame();
+					choice.GetComponentInChildren<Button>().Select();
+				}
+
 				choice.GetComponentInChildren<ChoiceBox>().Initialize(i);
 				choice.GetComponentInChildren<TextMeshProUGUI>().text = choices[i].text;
 			}
