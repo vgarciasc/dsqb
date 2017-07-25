@@ -122,6 +122,8 @@ MonoBehaviour:
   health: 0
   stamina: 0
   speed: 8
+  arrowPrefab: {fileID: 1055538037575574, guid: bac1bd7a9aa628e4b839e1c712986e17,
+    type: 2}
 --- !u!114 &114817275067634048
 MonoBehaviour:
   m_ObjectHideFlags: 1
