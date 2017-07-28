@@ -8,10 +8,14 @@ public class Dragon : MonoBehaviour {
 	Rigidbody2D rb;
 	Vector3 current_target = Vector2.zero;
 	float speed = 3;
+	Player player;
 
 	[Header("Dragon Properties")]
 	public float health = 1f;
 	public float invincibilityCooldown = 2f;
+	
+	[Header("Dragon Attacks")]
+	public GameObject dragonAttack_FireballPrefab;
 
 	void Start () {
 		Initialize_References();
@@ -21,9 +25,16 @@ public class Dragon : MonoBehaviour {
 	void Initialize_References() {
 		rb = this.GetComponentInChildren<Rigidbody2D>();
 		sr = this.GetComponentInChildren<SpriteRenderer>();
+
+		player = HushPuppy.safeFindComponent("Player", "Player") as Player;
 	}
 
 	void Update() {
+		if (Input.GetKeyDown(KeyCode.E)) {
+			print("Debug!");
+			Throw_Fireball();
+		}
+
 		Handle_Movement();
 	}
 
@@ -31,49 +42,51 @@ public class Dragon : MonoBehaviour {
 		rb.velocity = (current_target - transform.position).normalized * speed;
 	}
 
-	IEnumerator Walking_Behaviour() {
-		while (true) {
-			RaycastHit2D hit;
-			Vector2 next_pos;
+	#region movement
+		IEnumerator Walking_Behaviour() {
+			while (true) {
+				RaycastHit2D hit;
+				Vector2 next_pos;
 
-			do {
-				next_pos = new Vector3(
-					Random.Range(-4f, 4f),
-					Random.Range(-4f, 4f)	
-				);
+				do {
+					next_pos = new Vector3(
+						Random.Range(-4f, 4f),
+						Random.Range(-4f, 4f)	
+					);
 
-				hit = Physics2D.Raycast(
-					this.transform.position,
-					next_pos,
+					hit = Physics2D.Raycast(
+						this.transform.position,
+						next_pos,
+						Vector2.Distance(
+							this.transform.position,
+							next_pos + (Vector2) this.transform.position)
+					);
+				} while (hit.collider != null);
+
+				Move_Towards(next_pos);
+
+				yield return new WaitUntil(() => 
 					Vector2.Distance(
 						this.transform.position,
-						next_pos + (Vector2) this.transform.position)
+						next_pos
+					) < 0.2f
 				);
-			} while (hit.collider != null);
 
-			Move_Towards(next_pos);
+				Reset_Velocity();
 
-			yield return new WaitUntil(() => 
-				Vector2.Distance(
-					this.transform.position,
-					next_pos
-				) < 0.2f
-			);
-
-			Reset_Velocity();
-
-			yield return new WaitForSeconds(0.8f);
+				yield return new WaitForSeconds(0.8f);
+			}
 		}
-	}
-	
-	void Move_Towards(Vector2 next_pos) {
-		current_target = next_pos;
-	}
+		
+		void Move_Towards(Vector2 next_pos) {
+			current_target = next_pos;
+		}
 
-	void Reset_Velocity() {
-		current_target = this.transform.position;
-		rb.velocity = Vector2.zero;
-	}
+		void Reset_Velocity() {
+			current_target = this.transform.position;
+			rb.velocity = Vector2.zero;
+		}
+	#endregion
 
 	#region sprite
 		void Set_Alpha(float alpha) {
@@ -85,7 +98,7 @@ public class Dragon : MonoBehaviour {
 		}
 	#endregion
 
-	#region damage
+	#region health
 		bool took_hit_invincible = false;
 
 		public void Take_Damage(int amount) {
@@ -104,11 +117,25 @@ public class Dragon : MonoBehaviour {
 		IEnumerator Take_Damage_Cooldown() {
 			took_hit_invincible = true;
 			Set_Alpha(0.5f);
-			
+
 			yield return new WaitForSeconds(invincibilityCooldown);	
 
 			took_hit_invincible = false;
 			Set_Alpha(1f);
+		}
+	#endregion
+
+	#region attacks
+		public void Throw_Fireball() {
+			GameObject fireball = Instantiate(
+				dragonAttack_FireballPrefab,
+				this.transform.position,
+				Quaternion.identity
+			);
+
+			var fb_rb = fireball.GetComponentInChildren<Rigidbody2D>();
+			fb_rb.velocity = (player.transform.position - fb_rb.transform.position).normalized * 10;
+			fb_rb.angularVelocity = 360;
 		}
 	#endregion
 }

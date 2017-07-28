@@ -713,12 +713,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4016963352806004, guid: 76450d14ec81e704386075d3587d25e8,
     type: 2}
   m_PrefabInternal: {fileID: 1452820907}
---- !u!114 &1397475107 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114796208720973758, guid: 76450d14ec81e704386075d3587d25e8,
-    type: 2}
-  m_PrefabInternal: {fileID: 1452820907}
-  m_Script: {fileID: 11500000, guid: b6e7a167f77d0384cb1db71514572086, type: 3}
 --- !u!1 &1410777702
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,21 +841,17 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 50376235060961962, guid: 76450d14ec81e704386075d3587d25e8,
-        type: 2}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114104273343401978, guid: 76450d14ec81e704386075d3587d25e8,
-        type: 2}
-      propertyPath: dragon
-      value: 
-      objectReference: {fileID: 1397475107}
     - target: {fileID: 114104273343401978, guid: 76450d14ec81e704386075d3587d25e8,
         type: 2}
       propertyPath: health_indicator
       value: 
       objectReference: {fileID: 1631095117}
+    - target: {fileID: 114796208720973758, guid: 76450d14ec81e704386075d3587d25e8,
+        type: 2}
+      propertyPath: dragonAttack_FireballPrefab
+      value: 
+      objectReference: {fileID: 1689195514231376, guid: c06b01eebf0216f4083065186cf7b4fa,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76450d14ec81e704386075d3587d25e8, type: 2}
   m_IsPrefabParent: 0
