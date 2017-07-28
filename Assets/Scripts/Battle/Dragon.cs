@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Dragon : MonoBehaviour {
 
+	SpriteRenderer sr;
 	Rigidbody2D rb;
 	Vector3 current_target = Vector2.zero;
 	float speed = 3;
+
+	[Header("Dragon Properties")]
+	public float health = 1f;
+	public float invincibilityCooldown = 2f;
 
 	void Start () {
 		Initialize_References();
@@ -15,6 +20,7 @@ public class Dragon : MonoBehaviour {
 
 	void Initialize_References() {
 		rb = this.GetComponentInChildren<Rigidbody2D>();
+		sr = this.GetComponentInChildren<SpriteRenderer>();
 	}
 
 	void Update() {
@@ -68,4 +74,41 @@ public class Dragon : MonoBehaviour {
 		current_target = this.transform.position;
 		rb.velocity = Vector2.zero;
 	}
+
+	#region sprite
+		void Set_Alpha(float alpha) {
+			if (alpha < 0f || alpha > 1f) {
+				print("Alpha not received correctly.");
+			}
+	
+			sr.color = HushPuppy.getColorWithOpacity(sr.color, alpha);			
+		}
+	#endregion
+
+	#region damage
+		bool took_hit_invincible = false;
+
+		public void Take_Damage(int amount) {
+			if (took_hit_invincible) {
+				return;
+			}
+
+			health -= (float) amount / 100f;
+			if (health < 0) {
+				print("Dead!");
+			}
+
+			StartCoroutine(Take_Damage_Cooldown());
+		}
+
+		IEnumerator Take_Damage_Cooldown() {
+			took_hit_invincible = true;
+			Set_Alpha(0.5f);
+			
+			yield return new WaitForSeconds(invincibilityCooldown);	
+
+			took_hit_invincible = false;
+			Set_Alpha(1f);
+		}
+	#endregion
 }
