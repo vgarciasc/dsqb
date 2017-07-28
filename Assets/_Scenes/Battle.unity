@@ -124,7 +124,7 @@ GameObject:
   m_PrefabParentObject: {fileID: 1024100224172122, guid: 76450d14ec81e704386075d3587d25e8,
     type: 2}
   m_PrefabInternal: {fileID: 1452820907}
---- !u!114 &323164684
+--- !u!114 &323164685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -867,6 +867,12 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114796208720973758, guid: 76450d14ec81e704386075d3587d25e8,
+        type: 2}
+      propertyPath: dragonAttack_flameTowerPrefab
+      value: 
+      objectReference: {fileID: 1494836931920986, guid: a96fa53fe31e1b04c867ca6602d3d569,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 114392788322094706, guid: 76450d14ec81e704386075d3587d25e8, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 76450d14ec81e704386075d3587d25e8, type: 2}

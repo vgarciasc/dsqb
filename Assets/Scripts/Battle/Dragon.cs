@@ -18,6 +18,8 @@ public class Dragon : MonoBehaviour {
 	[SerializeField]
 	GameObject dragonAttack_fireballPrefab;
 	[SerializeField]
+	GameObject dragonAttack_flameTowerPrefab;
+	[SerializeField]
 	GameObject dragonAttack_physical;	
 
 	void Start () {
@@ -38,6 +40,9 @@ public class Dragon : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.F)) {
 			StartCoroutine(Attack_Physical());
+		}
+		if (Input.GetKeyDown(KeyCode.G)) {
+			Attack_Flame_Towers(8);
 		}
 
 		Handle_Movement();
@@ -148,5 +153,55 @@ public class Dragon : MonoBehaviour {
 			yield return new WaitForSeconds(1f);
 			dragonAttack_physical.SetActive(false);
 		}
+
+		#region Flametower
+			public void Attack_Flame_Towers(int quantity) {
+				List<Vector2> tower_pos = new List<Vector2>();
+
+				for (int i = 0; i < quantity; i++) {
+					tower_pos.Add(Get_New_Flame_Tower_Position(tower_pos));
+					if (tower_pos[i] != Vector2.zero) {
+						GameObject tower = Instantiate(
+							dragonAttack_flameTowerPrefab,
+							tower_pos[i],
+							Quaternion.identity
+						);
+					}
+				}
+			}
+
+			Vector2 Get_New_Flame_Tower_Position(List<Vector2> positions) {
+				Vector2 aux = Vector2.zero;
+				int k = 0;
+
+				do {
+					aux = new Vector2(
+						Random.Range(-8f, 8f),
+						Random.Range(-4f, 4f)
+					);
+
+					if (k++ > 100) {
+						print("No suitable places for flame tower.");
+						return Vector2.zero;
+					}
+				} while (!Distant_From_Each_Position(positions, aux, 2f));
+
+				return aux;
+			}
+
+			bool Distant_From_Each_Position(
+				List<Vector2> positions,
+				Vector2 to_test,
+				float threshold) {
+
+				for (int i = 0; i < positions.Count; i++) {
+					if (Vector2.Distance(to_test, positions[i]) < threshold) {
+						return false;
+					}
+				}
+
+				return true;
+			}
+		#endregion
 	#endregion
 }
