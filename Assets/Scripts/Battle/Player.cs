@@ -7,6 +7,7 @@ public enum Weapon { BOW };
 public class Player : MonoBehaviour {
 
 	//references
+	SpriteRenderer sr;
 	Rigidbody2D rb;
 
 	float charge_time = 3f; //time in seconds to complete a charge cycle
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour {
 	public float charge = 0f;
 	public float health = 1f;
 	public float stamina = 1f;
+	public float invincibilityCooldown = 1f;
 
 	[Header("Physics Properties")]
 	[SerializeField]
@@ -33,6 +35,7 @@ public class Player : MonoBehaviour {
 
 		void Initialize_References() {
 			rb = this.GetComponentInChildren<Rigidbody2D>();
+			sr = this.GetComponentInChildren<SpriteRenderer>();
 		}
 	#endregion
 
@@ -65,18 +68,28 @@ public class Player : MonoBehaviour {
 		}
 	#endregion
 
-	#region Charge
-		void Add_Charge() {
-			charge += Time.deltaTime / charge_time;
-			charge = Mathf.Clamp(charge, 0f, 1f);
-		}
-
-		void Reset_Charge() {
-			charge = 0f;
+	#region Sprite
+		void Set_Alpha(float alpha) {
+			if (alpha < 0f || alpha > 1f) {
+				print("Alpha not received correctly.");
+			}
+	
+			sr.color = HushPuppy.getColorWithOpacity(sr.color, alpha);			
 		}
 	#endregion
 
 	#region Weapons
+		#region Charge
+			void Add_Charge() {
+				charge += Time.deltaTime / charge_time;
+				charge = Mathf.Clamp(charge, 0f, 1f);
+			}
+
+			void Reset_Charge() {
+				charge = 0f;
+			}
+		#endregion
+
 		void Handle_Weapon_Bow() {
 			if (Input.GetButton("Fire1")) {
 				Start_Bow();
@@ -117,8 +130,7 @@ public class Player : MonoBehaviour {
 		}
 	#endregion
 
-	#region
-
+	#region Stamina
 		//stamina variables
 		float bow_stamina_depletion = 2f;
 		Coroutine stamina_recovery = null;
@@ -157,6 +169,33 @@ public class Player : MonoBehaviour {
 			}
 
 			stamina_recovery = null;
+		}
+	#endregion
+
+	#region Health
+		bool took_hit_invincible = false;
+
+		public void Take_Damage(int amount) {
+			if (took_hit_invincible) {
+				return;
+			}
+			
+			health -= (float) amount / 100f;
+			if (health < 0) {
+				print("Player is dead!");
+			}
+
+			StartCoroutine(Take_Damage_Cooldown());
+		}
+
+		IEnumerator Take_Damage_Cooldown() {
+			took_hit_invincible = true;
+			Set_Alpha(0.5f);
+
+			yield return new WaitForSeconds(invincibilityCooldown);	
+
+			took_hit_invincible = false;
+			Set_Alpha(1f);
 		}
 	#endregion
 }

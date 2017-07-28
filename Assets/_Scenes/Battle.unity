@@ -119,6 +119,23 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1618850643}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1 &323164683 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1024100224172122, guid: 76450d14ec81e704386075d3587d25e8,
+    type: 2}
+  m_PrefabInternal: {fileID: 1452820907}
+--- !u!114 &323164684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 323164683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed95ea64f3cb1f4787eeb061a0ae71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 30
 --- !u!224 &435638176 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224745332790857518, guid: cf7c491149745374d89308e2dc614499,
@@ -846,13 +863,12 @@ Prefab:
       propertyPath: health_indicator
       value: 
       objectReference: {fileID: 1631095117}
-    - target: {fileID: 114796208720973758, guid: 76450d14ec81e704386075d3587d25e8,
-        type: 2}
-      propertyPath: dragonAttack_FireballPrefab
-      value: 
-      objectReference: {fileID: 1689195514231376, guid: c06b01eebf0216f4083065186cf7b4fa,
-        type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 1024100224172122, guid: 76450d14ec81e704386075d3587d25e8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114392788322094706, guid: 76450d14ec81e704386075d3587d25e8, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 76450d14ec81e704386075d3587d25e8, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1468468416 stripped
@@ -977,6 +993,11 @@ Prefab:
       propertyPath: weapon_indicator
       value: 
       objectReference: {fileID: 610501132}
+    - target: {fileID: 114533682271817844, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: health
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7e14db95d9d533b44b041fa052e4dd04, type: 2}
   m_IsPrefabParent: 0

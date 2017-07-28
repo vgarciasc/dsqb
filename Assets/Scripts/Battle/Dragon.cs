@@ -15,7 +15,10 @@ public class Dragon : MonoBehaviour {
 	public float invincibilityCooldown = 2f;
 	
 	[Header("Dragon Attacks")]
-	public GameObject dragonAttack_FireballPrefab;
+	[SerializeField]
+	GameObject dragonAttack_fireballPrefab;
+	[SerializeField]
+	GameObject dragonAttack_physical;	
 
 	void Start () {
 		Initialize_References();
@@ -31,8 +34,10 @@ public class Dragon : MonoBehaviour {
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.E)) {
-			print("Debug!");
-			Throw_Fireball();
+			Attack_Throw_Fireball();
+		}
+		if (Input.GetKeyDown(KeyCode.F)) {
+			StartCoroutine(Attack_Physical());
 		}
 
 		Handle_Movement();
@@ -108,7 +113,7 @@ public class Dragon : MonoBehaviour {
 
 			health -= (float) amount / 100f;
 			if (health < 0) {
-				print("Dead!");
+				print("Dragon is dead!");
 			}
 
 			StartCoroutine(Take_Damage_Cooldown());
@@ -126,9 +131,9 @@ public class Dragon : MonoBehaviour {
 	#endregion
 
 	#region attacks
-		public void Throw_Fireball() {
+		public void Attack_Throw_Fireball() {
 			GameObject fireball = Instantiate(
-				dragonAttack_FireballPrefab,
+				dragonAttack_fireballPrefab,
 				this.transform.position,
 				Quaternion.identity
 			);
@@ -136,6 +141,12 @@ public class Dragon : MonoBehaviour {
 			var fb_rb = fireball.GetComponentInChildren<Rigidbody2D>();
 			fb_rb.velocity = (player.transform.position - fb_rb.transform.position).normalized * 10;
 			fb_rb.angularVelocity = 360;
+		}
+
+		public IEnumerator Attack_Physical() {
+			dragonAttack_physical.SetActive(true);
+			yield return new WaitForSeconds(1f);
+			dragonAttack_physical.SetActive(false);
 		}
 	#endregion
 }
