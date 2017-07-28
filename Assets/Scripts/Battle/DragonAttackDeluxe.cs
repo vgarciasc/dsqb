@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DragonAttackDeluxe : MonoBehaviour {
 	public int damage = 30;
+	public bool destroyOnHit = false;
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		GameObject target = coll.gameObject;
@@ -14,6 +15,8 @@ public class DragonAttackDeluxe : MonoBehaviour {
 	}
 
 	public virtual void Register_Hit() {
-		Destroy(this.gameObject);
+		if (destroyOnHit) {
+			Destroy(this.gameObject);
+		}
 	}
 }
