@@ -119,6 +119,7 @@ public class DragonAttackManager : MonoBehaviour {
 					tower_pos[i],
 					Quaternion.identity
 				);
+				tower.GetComponentInChildren<DragonAttackFlameTower>().Initialize(dragon.health);
 			}
 		}
 	}
