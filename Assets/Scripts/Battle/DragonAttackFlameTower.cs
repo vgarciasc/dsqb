@@ -29,7 +29,7 @@ public class DragonAttackFlameTower : DragonAttackDeluxe {
 		Destroy(this.gameObject);
 	}
 	
-	public override void Register_Hit() {
+	public override void Register_Hit(GameObject target) {
 
 	}
 }

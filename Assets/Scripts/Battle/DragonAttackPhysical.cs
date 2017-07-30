@@ -10,8 +10,7 @@ public class DragonAttackPhysical : DragonAttackDeluxe {
 		GameObject target = coll.gameObject;
 		if (target.tag == "Player") {
 			if (hurt_active) {
-				target.GetComponentInChildren<Player>().Take_Damage(damage);
-				Register_Hit();
+				Register_Hit(target);
 			}
 		}
 	}
@@ -30,8 +29,8 @@ public class DragonAttackPhysical : DragonAttackDeluxe {
 		}
 	}
 
-	public override void Register_Hit() {
-
+	public override void Register_Hit(GameObject target) {
+		target.GetComponentInChildren<Player>().Take_Damage(damage);
 	}
 
 	public void Set_Active(bool value) {

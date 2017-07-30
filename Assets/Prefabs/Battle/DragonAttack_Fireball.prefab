@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 50906513253760028}
   - component: {fileID: 58781475957367982}
   - component: {fileID: 114531225403950908}
+  - component: {fileID: 114497147867285726}
   m_Layer: 0
   m_Name: DragonAttack_Fireball
   m_TagString: Untagged
@@ -109,6 +110,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.175
+--- !u!114 &114497147867285726
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1689195514231376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f8c9f1b2403254db28259a7c113196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 30
+  destroyOnHit: 0
 --- !u!114 &114531225403950908
 MonoBehaviour:
   m_ObjectHideFlags: 1

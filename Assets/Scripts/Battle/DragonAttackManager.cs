@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DragonAttackManager : MonoBehaviour {
 
+	[SerializeField]
+	Dragon dragon;
+
 	Player player;
 
 	[Header("Dragon Attacks")]
@@ -48,7 +51,12 @@ public class DragonAttackManager : MonoBehaviour {
 					Attack_Flame_Towers(Random.Range(3, 7));
 				}
 				else {
-					Attack_Throw_Fireball();
+					int quantity = 1;
+					if (dragon.health < 0.5f) quantity = 2;
+					if (dragon.health < 0.25f) quantity = 3;
+					if (dragon.health < 0.1f) quantity = 5;
+
+					yield return Attack_Throw_Fireball(quantity);
 				}
 			}
 
@@ -56,8 +64,6 @@ public class DragonAttackManager : MonoBehaviour {
 				yield return Attack_Flame_Roar();
 				continue; //comment to view behaviour
 			}
-
-
 		}
 	}
 
@@ -73,6 +79,14 @@ public class DragonAttackManager : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.H)) {
 			StartCoroutine(Attack_Flame_Roar());
+		}
+	}
+
+	IEnumerator Attack_Throw_Fireball(int quantity) {
+		for (int i = 0; i < quantity; i++) {
+			Attack_Throw_Fireball();
+
+			yield return new WaitForSeconds(1f);
 		}
 	}
 

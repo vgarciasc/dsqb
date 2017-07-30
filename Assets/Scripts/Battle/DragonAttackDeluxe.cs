@@ -9,12 +9,12 @@ public class DragonAttackDeluxe : MonoBehaviour {
 	public virtual void OnTriggerEnter2D(Collider2D coll) {
 		GameObject target = coll.gameObject;
 		if (target.tag == "Player") {
-			target.GetComponentInChildren<Player>().Take_Damage(damage);
-			Register_Hit();
+			Register_Hit(target);
 		}
 	}
 
-	public virtual void Register_Hit() {
+	public virtual void Register_Hit(GameObject target) {
+		target.GetComponentInChildren<Player>().Take_Damage(damage);
 		if (destroyOnHit) {
 			Destroy(this.gameObject);
 		}

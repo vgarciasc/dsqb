@@ -614,6 +614,64 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &765494945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 765494946}
+  - component: {fileID: 765494947}
+  - component: {fileID: 765494948}
+  m_Layer: 9
+  m_Name: Personal Space
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &765494946
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 765494945}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1722013306}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &765494947
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 765494945}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
+--- !u!114 &765494948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 765494945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f8c9f1b2403254db28259a7c113196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 30
+  destroyOnHit: 0
 --- !u!1 &908682574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,6 +1615,7 @@ Transform:
   m_Children:
   - {fileID: 323164684}
   - {fileID: 908682575}
+  - {fileID: 765494946}
   m_Father: {fileID: 1258360591}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1753,7 +1812,6 @@ GameObject:
   - component: {fileID: 1985416180}
   - component: {fileID: 1985416184}
   - component: {fileID: 1985416179}
-  - component: {fileID: 1985416185}
   m_Layer: 9
   m_Name: Dragon
   m_TagString: Dragon
@@ -1773,6 +1831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59f1ffd833141a41a736126ce19ca5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragon: {fileID: 1985416180}
   dragonAttack_fireballPrefab: {fileID: 1689195514231376, guid: c06b01eebf0216f4083065186cf7b4fa,
     type: 2}
   dragonAttack_flameTowerPrefab: {fileID: 1494836931920986, guid: a96fa53fe31e1b04c867ca6602d3d569,
@@ -1781,6 +1840,7 @@ MonoBehaviour:
   dragonAttack_flameRoar: {fileID: 1454680835}
   dragonAttack_flameRoar_particleSystem: {fileID: 2108988264}
   flameRoarDuration: 2
+  interval_between_attacks: 2
 --- !u!114 &1985416180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1882,19 +1942,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragon: {fileID: 1985416180}
   health_indicator: {fileID: 1631095117}
---- !u!114 &1985416185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1985416178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3f8c9f1b2403254db28259a7c113196, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 30
-  destroyOnHit: 0
 --- !u!1 &2108988261
 GameObject:
   m_ObjectHideFlags: 0
