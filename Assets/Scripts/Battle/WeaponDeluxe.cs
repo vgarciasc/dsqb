@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class WeaponDeluxe : MonoBehaviour {
 	public int damage = 30;
+	public bool destroy_on_contact = false;
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		GameObject target = coll.gameObject;
 		if (target.tag == "Dragon") {
-			target.GetComponentInChildren<Dragon>().Take_Damage(damage);
-			Register_Hit();
+			Register_Hit(target);
 		}
 	}
 
-	void Register_Hit() {
-		Destroy(this.gameObject);
+	public virtual void Register_Hit(GameObject target) {
+		target.GetComponentInChildren<Dragon>().Take_Damage(damage);
+
+		if (destroy_on_contact) {
+			Destroy(this.gameObject);
+		}
 	}
 }

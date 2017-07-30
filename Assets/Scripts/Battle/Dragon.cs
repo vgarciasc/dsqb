@@ -10,6 +10,9 @@ public class Dragon : MonoBehaviour {
 	float speed = 3;
 	Player player;
 
+	[HideInInspector]
+	float turn_speed_dampener = 1f;
+
 	[Header("Dragon Properties")]
 	public float health = 1f;
 	public float invincibilityCooldown = 2f;
@@ -28,10 +31,28 @@ public class Dragon : MonoBehaviour {
 
 	void Update() {
 		Handle_Movement();
+		Handle_Aim();
 	}
 
 	void Handle_Movement() {
 		rb.velocity = (current_target - transform.position).normalized * speed;
+	}
+
+	void Handle_Aim() {
+		Vector2 diff = this.transform.position - player.transform.position;
+		float rotation = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+
+		rotation += 90;
+
+		Quaternion quat = Quaternion.identity;
+		quat.eulerAngles = new Vector3(0f, 0f, rotation);
+
+		// this.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
+		this.transform.rotation = Quaternion.RotateTowards(
+			this.transform.rotation,
+			quat,
+			Time.deltaTime * 100f / turn_speed_dampener
+		);
 	}
 
 	#region movement
@@ -78,6 +99,14 @@ public class Dragon : MonoBehaviour {
 			current_target = this.transform.position;
 			rb.velocity = Vector2.zero;
 		}
+
+		public void Set_Turn_Speed_Dampener(float dampener) {
+			turn_speed_dampener = dampener;
+		}
+
+		public void Reset_Turn_Speed() {
+			turn_speed_dampener = 1f;
+		}
 	#endregion
 
 	#region sprite
@@ -86,7 +115,9 @@ public class Dragon : MonoBehaviour {
 				print("Alpha not received correctly.");
 			}
 	
-			sr.color = HushPuppy.getColorWithOpacity(sr.color, alpha);			
+			foreach (SpriteRenderer s in GetComponentsInChildren<SpriteRenderer>()) {
+				s.color = HushPuppy.getColorWithOpacity(s.color, alpha);			
+			}
 		}
 	#endregion
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class DragonAttackFlameTower : DragonAttackDeluxe {
 	[SerializeField]
@@ -22,6 +23,15 @@ public class DragonAttackFlameTower : DragonAttackDeluxe {
 
 	IEnumerator Behaviour() {
 		trigger_coll.enabled = false;
+		Vector3 original_scale = this.transform.localScale;
+
+		this.transform.localScale = Vector3.zero;
+		this.transform.DOScale(
+			original_scale,
+			0.4f
+		);
+
+		yield return new WaitForSeconds(0.5f);
 
 		float wait_time = Mathf.Clamp(
 			buildup_health_multiplier * base_buildup_time,
@@ -37,10 +47,15 @@ public class DragonAttackFlameTower : DragonAttackDeluxe {
 			explosion.main.duration +
 			explosion.main.startLifetime.constant);
 		
-		Destroy(this.gameObject);
-	}
-	
-	public override void Register_Hit(GameObject target) {
+		trigger_coll.enabled = false;
+		
+		var tween = this.transform.DOScale(
+			Vector3.zero,
+			0.5f
+		);
+		tween.SetEase(Ease.InCirc);
+		yield return new WaitForSeconds(0.5f);
 
+		Destroy(this.gameObject);
 	}
 }

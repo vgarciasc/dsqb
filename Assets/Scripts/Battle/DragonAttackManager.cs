@@ -47,8 +47,8 @@ public class DragonAttackManager : MonoBehaviour {
 
 			else if (distance_between > 5f) {
 				int dice = Random.Range(0, 20);
-				if (dice < 5) {
-					Attack_Flame_Towers(Random.Range(3, 7));
+				if (dice < 10) {
+					Attack_Flame_Towers(Random.Range(8, 14));
 				}
 				else {
 					int quantity = 1;
@@ -83,11 +83,15 @@ public class DragonAttackManager : MonoBehaviour {
 	}
 
 	IEnumerator Attack_Throw_Fireball(int quantity) {
+		dragon.Set_Turn_Speed_Dampener(1.2f);
+
 		for (int i = 0; i < quantity; i++) {
 			Attack_Throw_Fireball();
 
 			yield return new WaitForSeconds(1f);
 		}
+
+		dragon.Reset_Turn_Speed();
 	}
 
 	public void Attack_Throw_Fireball() {
@@ -97,18 +101,30 @@ public class DragonAttackManager : MonoBehaviour {
 			Quaternion.identity
 		);
 
+		float speedMultiplier = 10;
+		if (dragon.health < 0.5f) speedMultiplier *= 2;
+		else if (dragon.health < 0.2f) speedMultiplier *= 3f;
+
 		var fb_rb = fireball.GetComponentInChildren<Rigidbody2D>();
-		fb_rb.velocity = (player.transform.position - fb_rb.transform.position).normalized * 10;
+		fb_rb.velocity = (player.transform.position - fb_rb.transform.position).normalized * speedMultiplier;
 		fb_rb.angularVelocity = 360;
 	}
 
 	public IEnumerator Attack_Physical() {
+		dragon.Set_Turn_Speed_Dampener(3f);
+
+		yield return new WaitForSeconds(0.5f);
+
 		dragonAttack_physical.Set_Active(true);
+
 		yield return new WaitForSeconds(1f);
+
 		dragonAttack_physical.Set_Active(false);
+		dragon.Reset_Turn_Speed();
 	}
 
 	public void Attack_Flame_Towers(int quantity) {
+		print("X");
 		List<Vector2> tower_pos = new List<Vector2>();
 
 		for (int i = 0; i < quantity; i++) {
@@ -119,7 +135,9 @@ public class DragonAttackManager : MonoBehaviour {
 					tower_pos[i],
 					Quaternion.identity
 				);
-				tower.GetComponentInChildren<DragonAttackFlameTower>().Initialize(dragon.health);
+
+				var aux = tower.GetComponentInChildren<DragonAttackFlameTower>();
+				aux.Initialize(dragon.health);
 			}
 		}
 	}

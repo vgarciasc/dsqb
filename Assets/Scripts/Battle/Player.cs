@@ -41,9 +41,29 @@ public class Player : MonoBehaviour {
 
 	#region Update and Handlers
 		void Update () {
+			Handle_Aim();
 			Handle_Movement();
 			Handle_Stamina();
 			Handle_Weapon();
+		}
+
+		void Handle_Aim() {
+			Vector2 aim_analog = new Vector2(
+				Input.GetAxis("Horizontal_Right"),
+				Input.GetAxis("Vertical_Right")
+			);
+
+			if (aim_analog == Vector2.zero) {
+				aim_analog = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				aim_analog -= (Vector2) this.transform.position;
+				
+				if (aim_analog == Vector2.zero) {
+					return;
+				}
+			}
+
+			float rotation = Mathf.Atan2(aim_analog.y, aim_analog.x) * Mathf.Rad2Deg;
+			this.transform.rotation = Quaternion.Euler(0f, 0f, rotation - 90);
 		}
 
 		void Handle_Movement() {
@@ -122,9 +142,14 @@ public class Player : MonoBehaviour {
 				Quaternion.identity
 			);
 
-			float arrowSpeed = 50 * charge;
+			float arrowSpeed = 25 * charge;
+
+			Vector2 direction = Vector2.up;
+			direction.x = Mathf.Cos((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
+			direction.y = Mathf.Sin((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
+
 			arrow.GetComponentInChildren<Rigidbody2D>().AddForce(
-				Vector2.up * arrowSpeed,
+				direction.normalized * arrowSpeed,
 				ForceMode2D.Impulse
 			);
 		}

@@ -121,9 +121,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   current_weapon: 0
   charge: 0
-  health: 0
+  health: 1
   stamina: 1
-  speed: 8
+  invincibilityCooldown: 1
+  speed: 5
   arrowPrefab: {fileID: 1055538037575574, guid: bac1bd7a9aa628e4b839e1c712986e17,
     type: 2}
 --- !u!114 &114817275067634048
