@@ -12,16 +12,53 @@ public class DragonAttackManager : MonoBehaviour {
 	[SerializeField]
 	GameObject dragonAttack_flameTowerPrefab;
 	[SerializeField]
-	GameObject dragonAttack_physical;	
+	DragonAttackPhysical dragonAttack_physical;	
 	[SerializeField]
 	GameObject dragonAttack_flameRoar;
 	[SerializeField]
 	ParticleSystem dragonAttack_flameRoar_particleSystem;
 	[SerializeField]
 	float flameRoarDuration = 2f;
+	[SerializeField]
+	float interval_between_attacks = 2f;
 
 	void Start() {
 		player = HushPuppy.safeFindComponent("Player", "Player") as Player;
+
+		StartCoroutine(Handle_AI());
+	}
+
+	IEnumerator Handle_AI() {
+		while (true) {
+			yield return new WaitForSeconds(interval_between_attacks);
+
+			float distance_between = Vector2.Distance(
+				this.transform.position,
+				player.transform.position
+			);
+			
+			if (dragonAttack_physical.player_in_view) {
+				yield return Attack_Physical();
+				continue; //comment to view behaviour
+			}
+
+			else if (distance_between > 5f) {
+				int dice = Random.Range(0, 20);
+				if (dice < 5) {
+					Attack_Flame_Towers(Random.Range(3, 7));
+				}
+				else {
+					Attack_Throw_Fireball();
+				}
+			}
+
+			else if (distance_between > 2f) {
+				yield return Attack_Flame_Roar();
+				continue; //comment to view behaviour
+			}
+
+
+		}
 	}
 
 	void Update() {
@@ -52,9 +89,9 @@ public class DragonAttackManager : MonoBehaviour {
 	}
 
 	public IEnumerator Attack_Physical() {
-		dragonAttack_physical.SetActive(true);
+		dragonAttack_physical.Set_Active(true);
 		yield return new WaitForSeconds(1f);
-		dragonAttack_physical.SetActive(false);
+		dragonAttack_physical.Set_Active(false);
 	}
 
 	public void Attack_Flame_Towers(int quantity) {

@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
 	SpriteRenderer sr;
 	Rigidbody2D rb;
 
-	float charge_time = 3f; //time in seconds to complete a charge cycle
+	float charge_time = 1f; //time in seconds to complete a charge cycle
 	bool is_charging_shot = false;
 
 	//properties
