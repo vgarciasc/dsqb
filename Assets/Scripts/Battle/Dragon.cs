@@ -124,6 +124,15 @@ public class Dragon : MonoBehaviour {
 	#region health
 		bool took_hit_invincible = false;
 
+		public void Take_Damage_Arrow(WeaponArrow arrow) {
+			if (took_hit_invincible) {
+				return;
+			}
+			
+			arrow.Fix_Arrow_To(this.gameObject);
+			Take_Damage(arrow.damage);
+		}
+
 		public void Take_Damage(int amount) {
 			if (took_hit_invincible) {
 				return;
@@ -131,7 +140,8 @@ public class Dragon : MonoBehaviour {
 
 			health -= (float) amount / 100f;
 			if (health < 0) {
-				print("Dragon is dead!");
+				((SceneLoader) HushPuppy.safeFindComponent("GameController", "SceneLoader")).Victory();
+				Destroy(this.gameObject);
 			}
 
 			StartCoroutine(Take_Damage_Cooldown());

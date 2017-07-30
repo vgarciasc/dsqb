@@ -207,7 +207,8 @@ public class Player : MonoBehaviour {
 			
 			health -= (float) amount / 100f;
 			if (health < 0) {
-				print("Player is dead!");
+				((SceneLoader) HushPuppy.safeFindComponent("GameController", "SceneLoader")).Game_Over();
+				Destroy(this.gameObject);
 			}
 
 			StartCoroutine(Take_Damage_Cooldown());
