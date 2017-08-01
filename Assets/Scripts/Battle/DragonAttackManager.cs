@@ -17,11 +17,9 @@ public class DragonAttackManager : MonoBehaviour {
 	[SerializeField]
 	DragonAttackPhysical dragonAttack_physical;	
 	[SerializeField]
-	GameObject dragonAttack_flameRoar;
+	DragonAttackFlameRoar dragonAttack_flameRoar;
 	[SerializeField]
 	ParticleSystem dragonAttack_flameRoar_particleSystem;
-	[SerializeField]
-	float flameRoarDuration = 2f;
 	[SerializeField]
 	float interval_between_attacks = 2f;
 
@@ -124,7 +122,6 @@ public class DragonAttackManager : MonoBehaviour {
 	}
 
 	public void Attack_Flame_Towers(int quantity) {
-		print("X");
 		List<Vector2> tower_pos = new List<Vector2>();
 
 		for (int i = 0; i < quantity; i++) {
@@ -179,15 +176,6 @@ public class DragonAttackManager : MonoBehaviour {
 	#endregion
 
 	public IEnumerator Attack_Flame_Roar() {
-		dragonAttack_flameRoar.SetActive(true);
-		dragonAttack_flameRoar_particleSystem.Play();
-		
-		yield return new WaitForSeconds(flameRoarDuration);
-		
-		dragonAttack_flameRoar_particleSystem.Stop();
-
-		yield return new WaitForSeconds(0.5f);
-
-		dragonAttack_flameRoar.SetActive(false);
+		yield return dragonAttack_flameRoar.Attack();
 	}
 }

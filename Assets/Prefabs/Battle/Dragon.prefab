@@ -99,7 +99,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1746463908216490
 GameObject:
   m_ObjectHideFlags: 1
@@ -502,6 +502,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   destroyOnHit: 0
+  telegraph_time: 1
+  attack_duration: 2
+  flames: {fileID: 198616447941516274}
+  sprite: {fileID: 212343139418056540}
 --- !u!114 &114613805104493432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -547,9 +551,8 @@ MonoBehaviour:
   dragonAttack_flameTowerPrefab: {fileID: 1494836931920986, guid: a96fa53fe31e1b04c867ca6602d3d569,
     type: 2}
   dragonAttack_physical: {fileID: 114641518778062270}
-  dragonAttack_flameRoar: {fileID: 1626615680525994}
+  dragonAttack_flameRoar: {fileID: 114216321830610534}
   dragonAttack_flameRoar_particleSystem: {fileID: 198616447941516274}
-  flameRoarDuration: 2
   interval_between_attacks: 2
 --- !u!114 &114995820776990338
 MonoBehaviour:
@@ -7240,7 +7243,7 @@ SpriteRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1626615680525994}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_MotionVectors: 1
