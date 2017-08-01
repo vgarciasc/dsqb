@@ -450,6 +450,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1618850643}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &683694976 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114583779880495482, guid: e13fe96c55d5f7640be04d613e77e301,
+    type: 2}
+  m_PrefabInternal: {fileID: 1618850643}
+  m_Script: {fileID: 1453722849, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
 --- !u!4 &700085842 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4644167607374476, guid: d66d4ac90f844004ba4164b40194ef3c,
@@ -1241,6 +1247,10 @@ Prefab:
       propertyPath: m_Name
       value: Flame Roar Sprite
       objectReference: {fileID: 0}
+    - target: {fileID: 1258256602186000, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d, type: 2}
   m_IsPrefabParent: 0
@@ -1408,6 +1418,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1959273568}
     m_Modifications:
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spear_sprites.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4867472580073074, guid: 7e14db95d9d533b44b041fa052e4dd04, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1459,6 +1474,51 @@ Prefab:
         type: 2}
       propertyPath: health
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spear_sprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 6203e7722195ce2409bd00ce55c1b5c4,
+        type: 3}
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spear_sprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300002, guid: 6203e7722195ce2409bd00ce55c1b5c4,
+        type: 3}
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spear_sprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300004, guid: 6203e7722195ce2409bd00ce55c1b5c4,
+        type: 3}
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spear_sprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300006, guid: 6203e7722195ce2409bd00ce55c1b5c4,
+        type: 3}
+    - target: {fileID: 114533682271817844, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: current_weapon
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: weapon_quantity
+      value: 
+      objectReference: {fileID: 683694976}
+    - target: {fileID: 114533682271817844, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spearPrefab
+      value: 
+      objectReference: {fileID: 1055538037575574, guid: 1dbae71cceccb054ca85f5c7d0bb76b0,
+        type: 2}
+    - target: {fileID: 114533682271817844, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: max_spears
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7e14db95d9d533b44b041fa052e4dd04, type: 2}
@@ -1618,6 +1678,16 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114583779880495482, guid: e13fe96c55d5f7640be04d613e77e301,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114583779880495482, guid: e13fe96c55d5f7640be04d613e77e301,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e13fe96c55d5f7640be04d613e77e301, type: 2}

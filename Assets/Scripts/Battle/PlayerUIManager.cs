@@ -17,10 +17,26 @@ public class PlayerUIManager : MonoBehaviour {
 	Image stamina_indicator;
 	[SerializeField]
 	Image weapon_indicator;
+	[SerializeField]
+	TextMeshProUGUI weapon_quantity;
 
 	[Header("Sprites")]
 	[SerializeField]
 	List<Sprite> bow_sprites = new List<Sprite>();
+	[SerializeField]
+	List<Sprite> spear_sprites = new List<Sprite>();
+
+	void Start() {
+		Initialize_Weapon();	
+	}
+
+	void Initialize_Weapon() {
+		switch (player.current_weapon) {
+			case Weapon.BOW:
+				weapon_quantity.text = "";
+				break;
+		}
+	}
 
 	void Update() {
 		Update_Health();
@@ -41,6 +57,9 @@ public class PlayerUIManager : MonoBehaviour {
 			case Weapon.BOW:
 				Update_Bow();
 				break;
+			case Weapon.SPEAR:
+				Update_Spear();
+				break;
 		}
 	}
 
@@ -56,6 +75,23 @@ public class PlayerUIManager : MonoBehaviour {
 
 		if (player.charge <= 0.01f) {
 			weapon_indicator.sprite = bow_sprites[0];
+		}
+	}
+
+	void Update_Spear() {
+		weapon_quantity.text = "x" + player.current_spears;
+
+		float unit = 1f / spear_sprites.Count;
+
+		for (int i = 1; i < spear_sprites.Count; i++) {
+			if (player.charge > unit * (i - 1) &&
+				player.charge < unit * (i)) {
+				weapon_indicator.sprite = spear_sprites[i];
+			}
+		}
+
+		if (player.charge <= 0.01f) {
+			weapon_indicator.sprite = spear_sprites[0];
 		}
 	}
 }

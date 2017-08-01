@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Weapon { BOW };
+public enum Weapon { BOW, SPEAR };
 
 public class Player : MonoBehaviour {
 
@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 	bool is_charging_shot = false;
 
 	//properties
-	public Weapon current_weapon = Weapon.BOW;
+	public Weapon current_weapon = Weapon.SPEAR;
 	public float charge = 0f;
 	public float health = 1f;
 	public float stamina = 1f;
@@ -27,15 +27,26 @@ public class Player : MonoBehaviour {
 	[Header("Prefab References")]
 	[SerializeField]
 	GameObject arrowPrefab;
+	[SerializeField]
+	GameObject spearPrefab;
+
+	[Header("Weapons")]
+	public int max_spears = 3;
+	public int current_spears;
 
 	#region Start
 		void Start() {
 			Initialize_References();
+			Initialize_Properties();
 		}
 
 		void Initialize_References() {
 			rb = this.GetComponentInChildren<Rigidbody2D>();
 			sr = this.GetComponentInChildren<SpriteRenderer>();
+		}
+
+		void Initialize_Properties() {
+			current_spears = max_spears;
 		}
 	#endregion
 
@@ -84,6 +95,9 @@ public class Player : MonoBehaviour {
 				case Weapon.BOW:
 					Handle_Weapon_Bow();
 					break;
+				case Weapon.SPEAR:
+					Handle_Weapon_Spear();
+					break;
 			}
 		}
 	#endregion
@@ -110,54 +124,110 @@ public class Player : MonoBehaviour {
 			}
 		#endregion
 
-		void Handle_Weapon_Bow() {
-			if (Input.GetButton("Fire1")) {
-				Start_Bow();
+		#region Bow
+			void Handle_Weapon_Bow() {
+				if (Input.GetButton("Fire1")) {
+					Start_Bow();
+				}
+
+				if (Input.GetButtonUp("Fire1")) {
+					Release_Bow(charge);
+				}
 			}
 
-			if (Input.GetButtonUp("Fire1")) {
-				Release_Bow(charge);
+			void Start_Bow() {
+				is_charging_shot = true;
+				Stop_Stamina_Recovery();
+				Add_Charge();
 			}
-		}
 
-		void Start_Bow() {
-			is_charging_shot = true;
-			Stop_Stamina_Recovery();
-			Add_Charge();
-		}
+			void Release_Bow(float charge) {
+				is_charging_shot = false;
+				Reset_Charge();
+				Start_Stamina_Recovery();
 
-		void Release_Bow(float charge) {
-			is_charging_shot = false;
-			Reset_Charge();
-			Start_Stamina_Recovery();
-
-			float minimumChargeForBow = 0.33f;
-			if (charge < minimumChargeForBow) {
-				return;	
-			}
+				float minimumChargeForBow = 0.33f;
+				if (charge < minimumChargeForBow) {
+					return;	
+				}
 			
-			GameObject arrow = Instantiate(
-				arrowPrefab,
-				this.transform.position,
-				Quaternion.identity
-			);
+				GameObject arrow = Instantiate(
+					arrowPrefab,
+					this.transform.position,
+					Quaternion.identity
+				);
 
-			float arrowSpeed = 25 * charge;
+				float arrowSpeed = 25 * charge;
 
-			Vector2 direction = Vector2.up;
-			direction.x = Mathf.Cos((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
-			direction.y = Mathf.Sin((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
+				Vector2 direction = Vector2.up;
+				direction.x = Mathf.Cos((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
+				direction.y = Mathf.Sin((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
 
-			arrow.GetComponentInChildren<Rigidbody2D>().AddForce(
-				direction.normalized * arrowSpeed,
-				ForceMode2D.Impulse
-			);
-		}
+				arrow.GetComponentInChildren<Rigidbody2D>().AddForce(
+					direction.normalized * arrowSpeed,
+					ForceMode2D.Impulse
+				);
+			}
+		#endregion
+		#region Spear
+			void Handle_Weapon_Spear() {
+				if (Input.GetButton("Fire1")) {
+					Start_Spear();
+				}
+
+				if (Input.GetButtonUp("Fire1")) {
+					Release_Bow(charge);
+				}
+			}
+
+			void Start_Spear() {
+				if (current_spears <= 0) {
+					return;
+				}
+
+				is_charging_shot = true;
+				Stop_Stamina_Recovery();
+				Add_Charge();
+			}
+
+			void Release_Spear(float charge) {
+				if (current_spears <= 0) {
+					return;
+				}
+
+				is_charging_shot = false;
+				Reset_Charge();
+				Start_Stamina_Recovery();
+				current_spears--;
+
+				float minimumChargeForBow = 0.33f;
+				if (charge < minimumChargeForBow) {
+					return;
+				}
+
+				GameObject spear = Instantiate(
+					spearPrefab,
+					this.transform.position,
+					Quaternion.identity
+				);
+
+				float spearSpeed = 25 * charge;
+
+				Vector2 direction = Vector2.up;
+				direction.x = Mathf.Cos((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
+				direction.y = Mathf.Sin((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
+
+				spear.GetComponentInChildren<Rigidbody2D>().AddForce(
+					direction.normalized * spearSpeed,
+					ForceMode2D.Impulse
+				);
+			}
+		#endregion
 	#endregion
 
 	#region Stamina
-		//stamina variables
-		float bow_stamina_depletion = 2f;
+	//stamina variables
+	float bow_stamina_depletion = 2f;
 		Coroutine stamina_recovery = null;
 		float stamina_recovery_time = 4f;
 

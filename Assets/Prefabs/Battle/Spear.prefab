@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 50687436434187236}
   - component: {fileID: 61742818315092484}
   - component: {fileID: 114591694623907212}
-  - component: {fileID: 114377421092877626}
+  - component: {fileID: 114867977126525914}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: Spear
   m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1.3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -118,21 +118,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.22, y: 0.81}
   m_EdgeRadius: 0
---- !u!114 &114377421092877626
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1055538037575574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627e7e4bcd9e6e640a6ed6e189eef7fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  destroy_on_contact: 0
-  sr: {fileID: 212791102534134268}
-  rb: {fileID: 50687436434187236}
 --- !u!114 &114591694623907212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,6 +130,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetimeAfterDisappearing: 2
+--- !u!114 &114867977126525914
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1055538037575574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab85dbf6e36422242bf7f13359d26480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 30
+  destroy_on_contact: 0
+  sr: {fileID: 212791102534134268}
+  rb: {fileID: 50687436434187236}
 --- !u!212 &212791102534134268
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -177,7 +177,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 14d1135c80c65c142a788275ba751ea5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fa60dfcf4d917d04b9f43db427d412ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
