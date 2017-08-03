@@ -21,11 +21,10 @@ GameObject:
   - component: {fileID: 4772994318117224}
   - component: {fileID: 50687436434187236}
   - component: {fileID: 61742818315092484}
-  - component: {fileID: 114591694623907212}
   - component: {fileID: 114867977126525914}
   m_Layer: 0
   m_Name: Spear
-  m_TagString: Arrow
+  m_TagString: Spear
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1055538037575574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.98434573, y: -3.8110561, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4920362645374642}
@@ -118,18 +117,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.22, y: 0.81}
   m_EdgeRadius: 0
---- !u!114 &114591694623907212
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1055538037575574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ab786fda2855f44c8bc8f2f1ba707ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifetimeAfterDisappearing: 2
 --- !u!114 &114867977126525914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,10 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab85dbf6e36422242bf7f13359d26480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 10
   destroy_on_contact: 0
   sr: {fileID: 212791102534134268}
   rb: {fileID: 50687436434187236}
+  lifetimeAfterDisappearing: 2
 --- !u!212 &212791102534134268
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -176,7 +164,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: fa60dfcf4d917d04b9f43db427d412ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

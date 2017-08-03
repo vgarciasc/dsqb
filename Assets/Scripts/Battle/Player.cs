@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	//references
 	SpriteRenderer sr;
 	Rigidbody2D rb;
+	PlayerSpearCapture spearCapture;
 
 	float charge_time = 1f; //time in seconds to complete a charge cycle
 	bool is_charging_shot = false;
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour {
 		void Initialize_References() {
 			rb = this.GetComponentInChildren<Rigidbody2D>();
 			sr = this.GetComponentInChildren<SpriteRenderer>();
+			spearCapture = this.GetComponentInChildren <PlayerSpearCapture> ();
 		}
 
 		void Initialize_Properties() {
@@ -96,7 +98,8 @@ public class Player : MonoBehaviour {
 					Handle_Weapon_Bow();
 					break;
 				case Weapon.SPEAR:
-					Handle_Weapon_Spear();
+					Handle_Weapon_Spear ();
+					Handle_Weapon_Spear_Capture ();
 					break;
 			}
 		}
@@ -176,7 +179,28 @@ public class Player : MonoBehaviour {
 				}
 
 				if (Input.GetButtonUp("Fire1")) {
-					Release_Bow(charge);
+					Release_Spear(charge);
+				}
+			}
+
+			void Handle_Weapon_Spear_Capture() {
+				if (Input.GetButtonDown ("Fire2")) {
+					Toggle_Capturing_Spear (true);
+				}
+				if (Input.GetButtonUp ("Fire2")) {
+					Toggle_Capturing_Spear (false);
+				}
+			}
+		
+			void Toggle_Capturing_Spear(bool value) {
+				if (value) {
+					Stop_Stamina_Recovery ();
+					is_capturing_spear = true;
+					GetComponentInChildren<PlayerSpearCapture>().Start_Capture ();
+				} else {
+					Start_Stamina_Recovery();
+					is_capturing_spear = false;
+					GetComponentInChildren<PlayerSpearCapture>().End_Capture ();
 				}
 			}
 
@@ -198,13 +222,13 @@ public class Player : MonoBehaviour {
 				is_charging_shot = false;
 				Reset_Charge();
 				Start_Stamina_Recovery();
-				current_spears--;
 
 				float minimumChargeForBow = 0.33f;
 				if (charge < minimumChargeForBow) {
 					return;
 				}
 
+				current_spears--;
 				GameObject spear = Instantiate(
 					spearPrefab,
 					this.transform.position,
@@ -227,20 +251,31 @@ public class Player : MonoBehaviour {
 
 	#region Stamina
 	//stamina variables
-	float bow_stamina_depletion = 2f;
-		Coroutine stamina_recovery = null;
+		float bow_stamina_depletion = 2f;
 		float stamina_recovery_time = 4f;
+		Coroutine stamina_recovery = null;
+		bool is_capturing_spear = false; 
+		float capture_spear_depletion = 4f;
 
 		void Handle_Stamina() {
 			if (is_charging_shot) {
 				stamina -= Time.deltaTime / bow_stamina_depletion; 
 			}
+			if (is_capturing_spear) {
+				stamina -= Time.deltaTime / capture_spear_depletion;
+			}
 
 			stamina = Mathf.Clamp(stamina, 0f, 1f);
 
-			if (stamina == 0f && is_charging_shot) {
-				Release_Bow(charge);
+			if (stamina == 0f) {
+				if (is_charging_shot) {
+					Release_Bow (charge);
+				}
+				if (is_capturing_spear) {
+					Toggle_Capturing_Spear (false);
+				}
 			}
+			
 		}
 
 		void Start_Stamina_Recovery() {

@@ -39,6 +39,10 @@ public class Dragon : MonoBehaviour {
 	}
 
 	void Handle_Aim() {
+		if (player == null) {
+			return;
+		}
+
 		Vector2 diff = this.transform.position - player.transform.position;
 		float rotation = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 
