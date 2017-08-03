@@ -1251,6 +1251,16 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 212331204666987432, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 199297085042890592, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d, type: 2}
   m_IsPrefabParent: 0
@@ -1472,8 +1482,48 @@ Prefab:
       objectReference: {fileID: 683694976}
     - target: {fileID: 58177247786952706, guid: 7e14db95d9d533b44b041fa052e4dd04,
         type: 2}
-      propertyPath: m_IsTrigger
-      value: 1
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spear_sprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5b5e8a1843f497d4bad386dad5f85a13,
+        type: 3}
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spear_sprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300006, guid: 5b5e8a1843f497d4bad386dad5f85a13,
+        type: 3}
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spear_sprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300004, guid: 5b5e8a1843f497d4bad386dad5f85a13,
+        type: 3}
+    - target: {fileID: 114817275067634048, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: spear_sprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300002, guid: 5b5e8a1843f497d4bad386dad5f85a13,
+        type: 3}
+    - target: {fileID: 114533682271817844, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: current_weapon
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114966153000628444, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: bloodSplatter
+      value: 
+      objectReference: {fileID: 1275031361215626, guid: cbb129ac120c8534e9ce81f95bf374a2,
+        type: 2}
+    - target: {fileID: 212147147445054092, guid: 7e14db95d9d533b44b041fa052e4dd04,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7e14db95d9d533b44b041fa052e4dd04, type: 2}

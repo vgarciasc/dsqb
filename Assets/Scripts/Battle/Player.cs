@@ -54,6 +54,10 @@ public class Player : MonoBehaviour {
 
 	#region Update and Handlers
 		void Update () {
+			if (Input.GetKeyDown(KeyCode.Equals)) {
+				current_weapon = (Weapon) (((int) (current_weapon) + 1) % System.Enum.GetValues(typeof(Weapon)).Length);
+			}
+
 			Handle_Aim();
 			Handle_Movement();
 			Handle_Stamina();
@@ -86,7 +90,12 @@ public class Player : MonoBehaviour {
 			float speed = this.speed;
 
 			if (is_charging_shot) {
-				speed /= 4f; //if player is charging shot, he gets slower
+				if (current_weapon == Weapon.BOW) {
+					speed /= 4f; //if player is charging shot, he gets slower
+				}
+				else if (current_weapon == Weapon.SPEAR) {
+					speed /= 6f;
+				}
 			}
 
 			rb.velocity = new Vector2(horizontal, vertical) * speed;
@@ -240,6 +249,9 @@ public class Player : MonoBehaviour {
 				Vector2 direction = Vector2.up;
 				direction.x = Mathf.Cos((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
 				direction.y = Mathf.Sin((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
+		
+				var rot_aux = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+				spear.transform.rotation = Quaternion.Euler(0f, 0f, rot_aux - 90);
 
 				spear.GetComponentInChildren<Rigidbody2D>().AddForce(
 					direction.normalized * spearSpeed,
@@ -252,6 +264,7 @@ public class Player : MonoBehaviour {
 	#region Stamina
 	//stamina variables
 		float bow_stamina_depletion = 2f;
+		float spear_stamina_depletion = 1.5f;
 		float stamina_recovery_time = 4f;
 		Coroutine stamina_recovery = null;
 		bool is_capturing_spear = false; 
@@ -259,7 +272,12 @@ public class Player : MonoBehaviour {
 
 		void Handle_Stamina() {
 			if (is_charging_shot) {
-				stamina -= Time.deltaTime / bow_stamina_depletion; 
+				if (current_weapon == Weapon.BOW) {
+					stamina -= Time.deltaTime / bow_stamina_depletion; 
+				}
+				if (current_weapon == Weapon.SPEAR) {
+					stamina -= Time.deltaTime / spear_stamina_depletion;
+				}
 			}
 			if (is_capturing_spear) {
 				stamina -= Time.deltaTime / capture_spear_depletion;

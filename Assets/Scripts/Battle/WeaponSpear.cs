@@ -57,6 +57,10 @@ public class WeaponSpear : WeaponDeluxe {
 	}
 
 	public override void Register_Hit(GameObject target) {
+		if (rb.velocity.sqrMagnitude < 0.1f) {
+			return;
+		}
+
 		target.GetComponentInChildren<Dragon>().Take_Damage_Spear(this);
 
 		if (destroy_on_contact) {
@@ -82,6 +86,8 @@ public class WeaponSpear : WeaponDeluxe {
 		sr.transform.parent = target.transform;
 		sr.transform.SetAsLastSibling();
 		sr.sortingOrder = 0;
+		sr.gameObject.tag = gameObject.tag;
+		sr.gameObject.name = "FIXED_SPEAR";
 		Destroy(this.gameObject);
 
 		/*

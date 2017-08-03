@@ -19,7 +19,7 @@ public class DragonAttackFireBall : DragonAttackDeluxe {
 		can_destroy = true;
 	}
 
-	void OnTriggerEnter2D(Collider2D coll) {
+	public override void OnTriggerEnter2D(Collider2D coll) {
 		GameObject target = coll.gameObject;
 		if (target.tag == "Spear") {
 			WeaponSpear spear = target.GetComponentInChildren <WeaponSpear> ();
