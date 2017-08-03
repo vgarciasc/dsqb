@@ -42,7 +42,7 @@ public class WeaponSpear : WeaponDeluxe {
 		rb.drag = original_drag;
 	}
 
-	public virtual void Handle_Direction() {
+	public override void Handle_Direction() {
 		if (rb.velocity.sqrMagnitude < 0.35f) {
 			if (!stopped) {
 				stopped = true;
@@ -54,6 +54,14 @@ public class WeaponSpear : WeaponDeluxe {
 
 		float rotation = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
 		this.transform.rotation = Quaternion.Euler(0f, 0f, rotation - 90);
+	}
+
+	public override void Register_Hit(GameObject target) {
+		target.GetComponentInChildren<Dragon>().Take_Damage_Spear(this);
+
+		if (destroy_on_contact) {
+			Destroy(this.gameObject);
+		}
 	}
 
 	bool is_destroying = false;
@@ -68,5 +76,19 @@ public class WeaponSpear : WeaponDeluxe {
 	public void Destroy_Now() {
 		GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren <Player>().current_spears++;
 		Destroy(this.gameObject);
+	}
+
+	public void Fix_Spear_To(GameObject target) {
+		sr.transform.parent = target.transform;
+		sr.transform.SetAsLastSibling();
+		sr.sortingOrder = 0;
+		Destroy(this.gameObject);
+
+		/*
+		 * this.transform.parent = target.transform;
+		this.transform.SetAsLastSibling ();
+		this.enabled = false;
+		sr.sortingOrder = 0;
+		*/
 	}
 }

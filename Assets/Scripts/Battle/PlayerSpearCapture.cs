@@ -11,8 +11,13 @@ public class PlayerSpearCapture : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D coll) {
 		GameObject target = coll.gameObject;
 		if (target.tag == "Spear" && can_capture) {
-			WeaponSpear spear = target.GetComponentInChildren<WeaponSpear>();
-			spear.Destroy_Now ();
+			var aux = target.GetComponentInChildren <WeaponSpear> ();
+			if (aux == null) {
+				Destroy (target);
+				GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren <Player> ().current_spears++;
+			} else {
+				aux.Destroy_Now ();
+			}
 		}
 	}
 

@@ -137,6 +137,15 @@ public class Dragon : MonoBehaviour {
 			Take_Damage(arrow.damage);
 		}
 
+		public void Take_Damage_Spear(WeaponSpear spear) {
+			if (took_hit_invincible) {
+				return;
+			}
+
+			spear.Fix_Spear_To(this.gameObject);
+			Take_Damage(spear.damage);
+		}
+
 		public void Take_Damage(int amount) {
 			if (took_hit_invincible) {
 				return;
