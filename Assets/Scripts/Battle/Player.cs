@@ -235,7 +235,7 @@ public class Player : MonoBehaviour {
 					Quaternion.identity
 				);
 
-				float spearSpeed = 25 * charge;
+				float spearSpeed = 35 * charge;
 
 				Vector2 direction = Vector2.up;
 				direction.x = Mathf.Cos((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
@@ -269,7 +269,12 @@ public class Player : MonoBehaviour {
 
 			if (stamina == 0f) {
 				if (is_charging_shot) {
-					Release_Bow (charge);
+					if (current_weapon == Weapon.BOW) {
+						Release_Bow (charge);
+					}
+					if (current_weapon == Weapon.SPEAR) {
+						Release_Spear (charge);
+					}
 				}
 				if (is_capturing_spear) {
 					Toggle_Capturing_Spear (false);

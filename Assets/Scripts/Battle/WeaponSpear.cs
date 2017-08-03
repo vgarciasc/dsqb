@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class WeaponSpear : WeaponDeluxe {
 
 	[SerializeField]
 	float lifetimeAfterDisappearing = 2f;
 
+	bool stopped = false;
+	float original_drag;
+
 	void Start () {
 		Initialize();
+
+		StartCoroutine (Start_Stopping ());
 	}
 
 	void Update() {
@@ -21,10 +27,28 @@ public class WeaponSpear : WeaponDeluxe {
 
 	void Initialize() {
 		rb = GetComponentInChildren<Rigidbody2D>();
+
+		original_drag = rb.drag;
+		rb.drag = 0.5f;
+	}
+
+	IEnumerator Start_Stopping() {
+		yield return new WaitForSeconds (0.2f);
+
+		Stop ();
+	}
+
+	public void Stop() {
+		rb.drag = original_drag;
 	}
 
 	public virtual void Handle_Direction() {
-		if (rb.velocity == Vector2.zero) {
+		if (rb.velocity.sqrMagnitude < 0.35f) {
+			if (!stopped) {
+				stopped = true;
+				rb.velocity = Vector2.zero;
+				transform.DOScale (this.transform.localScale - Vector3.one * 0.15f, 0.25f);
+			}
 			return;
 		}
 
