@@ -28,6 +28,9 @@ public class DragonAttackFireBall : DragonAttackDeluxe {
 				Divide_Asteroid ();
 			}
 		}
+		if (target.tag == "Player") {
+			Register_Hit(target);
+		}
 	}
 
 	void OnTriggerStay2D(Collider2D coll) {
