@@ -120,7 +120,9 @@ public class Dragon : MonoBehaviour {
 			}
 	
 			foreach (SpriteRenderer s in GetComponentsInChildren<SpriteRenderer>()) {
-				s.color = HushPuppy.getColorWithOpacity(s.color, alpha);			
+				if (s.gameObject.tag != "SpearCapture") {
+					s.color = HushPuppy.getColorWithOpacity(s.color, alpha);			
+				}
 			}
 		}
 	#endregion

@@ -111,11 +111,11 @@ public class DragonAttackManager : MonoBehaviour {
 	public IEnumerator Attack_Physical() {
 		dragon.Set_Turn_Speed_Dampener(3f);
 
-		yield return new WaitForSeconds(0.5f);
+		// yield return new WaitForSeconds(0.5f);
 
 		dragonAttack_physical.Set_Active(true);
 
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(2f);
 
 		dragonAttack_physical.Set_Active(false);
 		dragon.Reset_Turn_Speed();

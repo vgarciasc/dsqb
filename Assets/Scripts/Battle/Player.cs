@@ -34,6 +34,7 @@ public class Player : MonoBehaviour {
 	[Header("Weapons")]
 	public int max_spears = 3;
 	public int current_spears;
+	public bool is_capturing_spear = false;
 
 	#region Start
 		void Start() {
@@ -98,6 +99,10 @@ public class Player : MonoBehaviour {
 				}
 			}
 
+			if (is_capturing_spear) {
+				speed /= 5f;
+			}
+
 			rb.velocity = new Vector2(horizontal, vertical) * speed;
 		}
 
@@ -108,7 +113,7 @@ public class Player : MonoBehaviour {
 					break;
 				case Weapon.SPEAR:
 					Handle_Weapon_Spear ();
-					Handle_Weapon_Spear_Capture ();
+					// Handle_Weapon_Spear_Capture ();
 					break;
 			}
 		}
@@ -192,25 +197,29 @@ public class Player : MonoBehaviour {
 				}
 			}
 
-			void Handle_Weapon_Spear_Capture() {
-				if (Input.GetButtonDown ("Fire2")) {
-					Toggle_Capturing_Spear (true);
-				}
-				if (Input.GetButtonUp ("Fire2")) {
-					Toggle_Capturing_Spear (false);
-				}
-			}
+			// void Handle_Weapon_Spear_Capture() {
+			// 	if (Input.GetButtonDown ("Fire2")) {
+			// 		Toggle_Capturing_Spear (true);
+			// 	}
+			// 	if (Input.GetButtonUp ("Fire2")) {
+			// 		Toggle_Capturing_Spear (false);
+			// 	}
+			// }
 		
-			void Toggle_Capturing_Spear(bool value) {
-				if (value) {
-					Stop_Stamina_Recovery ();
-					is_capturing_spear = true;
-					GetComponentInChildren<PlayerSpearCapture>().Start_Capture ();
-				} else {
-					Start_Stamina_Recovery();
-					is_capturing_spear = false;
-					GetComponentInChildren<PlayerSpearCapture>().End_Capture ();
-				}
+			// void Toggle_Capturing_Spear(bool value) {
+			// 	if (value) {
+			// 		Stop_Stamina_Recovery ();
+			// 		is_capturing_spear = true;
+			// 		GetComponentInChildren<PlayerSpearCapture>().Start_Capture ();
+			// 	} else {
+			// 		Start_Stamina_Recovery();
+			// 		is_capturing_spear = false;
+			// 		GetComponentInChildren<PlayerSpearCapture>().End_Capture ();
+			// 	}
+			// }
+
+			public void Gain_Spear() {
+				current_spears = Mathf.Clamp(current_spears + 1, 0, max_spears);
 			}
 
 			void Start_Spear() {
@@ -267,7 +276,6 @@ public class Player : MonoBehaviour {
 		float spear_stamina_depletion = 1.5f;
 		float stamina_recovery_time = 4f;
 		Coroutine stamina_recovery = null;
-		bool is_capturing_spear = false; 
 		float capture_spear_depletion = 4f;
 
 		void Handle_Stamina() {
@@ -278,9 +286,6 @@ public class Player : MonoBehaviour {
 				if (current_weapon == Weapon.SPEAR) {
 					stamina -= Time.deltaTime / spear_stamina_depletion;
 				}
-			}
-			if (is_capturing_spear) {
-				stamina -= Time.deltaTime / capture_spear_depletion;
 			}
 
 			stamina = Mathf.Clamp(stamina, 0f, 1f);
@@ -293,9 +298,6 @@ public class Player : MonoBehaviour {
 					if (current_weapon == Weapon.SPEAR) {
 						Release_Spear (charge);
 					}
-				}
-				if (is_capturing_spear) {
-					Toggle_Capturing_Spear (false);
 				}
 			}
 			

@@ -7,6 +7,8 @@ TagManager:
   - Dragon
   - Arrow
   - Spear
+  - WorldCanvas
+  - SpearCapture
   layers:
   - Default
   - TransparentFX

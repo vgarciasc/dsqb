@@ -7,9 +7,14 @@ public class WeaponSpear : WeaponDeluxe {
 
 	[SerializeField]
 	float lifetimeAfterDisappearing = 2f;
+	[SerializeField]
+	SpearCaptureArea spearCapture;
 
 	bool stopped = false;
 	float original_drag;
+	[SerializeField]
+	[Range(0f, 1f)]
+	float range = 0.5f;
 
 	void Start () {
 		Initialize();
@@ -33,9 +38,14 @@ public class WeaponSpear : WeaponDeluxe {
 	}
 
 	IEnumerator Start_Stopping() {
-		yield return new WaitForSeconds (0.2f);
+		yield return new WaitForSeconds (range * 0.4f);
 
 		Stop ();
+
+		yield return new WaitForSeconds (0.75f);
+
+		spearCapture.gameObject.SetActive(true);
+		spearCapture.Initialize();
 	}
 
 	public void Stop() {
@@ -90,11 +100,7 @@ public class WeaponSpear : WeaponDeluxe {
 		sr.gameObject.name = "FIXED_SPEAR";
 		Destroy(this.gameObject);
 
-		/*
-		 * this.transform.parent = target.transform;
-		this.transform.SetAsLastSibling ();
-		this.enabled = false;
-		sr.sortingOrder = 0;
-		*/
+		spearCapture.gameObject.SetActive(true);
+		spearCapture.Initialize();
 	}
 }
