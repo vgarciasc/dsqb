@@ -9,6 +9,7 @@ public class Dragon : MonoBehaviour {
 	Vector3 current_target = Vector2.zero;
 	float speed = 3;
 	Player player;
+	Coroutine walking_coroutine;
 
 	[HideInInspector]
 	float turn_speed_dampener = 1f;
@@ -19,7 +20,7 @@ public class Dragon : MonoBehaviour {
 
 	void Start () {
 		Initialize_References();
-		StartCoroutine(Walking_Behaviour());
+		walking_coroutine = StartCoroutine(Walking_Behaviour());
 	}
 
 	void Initialize_References() {
@@ -92,6 +93,20 @@ public class Dragon : MonoBehaviour {
 				Reset_Velocity();
 
 				yield return new WaitForSeconds(0.8f);
+			}
+		}
+
+		public void Stop_Walking() {
+			if (walking_coroutine != null) {
+				StopCoroutine(walking_coroutine);
+				walking_coroutine = null;
+				Move_Towards(this.transform.position);
+			}
+		}
+
+		public void Restart_Walking() {
+			if (walking_coroutine == null) {
+				walking_coroutine = StartCoroutine(Walking_Behaviour());
 			}
 		}
 		

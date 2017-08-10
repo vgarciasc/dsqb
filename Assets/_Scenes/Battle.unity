@@ -1289,24 +1289,6 @@ Prefab:
       propertyPath: health_indicator
       value: 
       objectReference: {fileID: 1631095117}
-    - target: {fileID: 1626615680525994, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d, type: 2}
-      propertyPath: m_Name
-      value: Flame Roar Sprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 1258256602186000, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212331204666987432, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 199297085042890592, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 9
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3cf1f8f2db9ee694ea94920a81f1dc4d, type: 2}
   m_IsPrefabParent: 0

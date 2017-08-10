@@ -99,10 +99,6 @@ public class Player : MonoBehaviour {
 				}
 			}
 
-			if (is_capturing_spear) {
-				speed /= 5f;
-			}
-
 			rb.velocity = new Vector2(horizontal, vertical) * speed;
 		}
 

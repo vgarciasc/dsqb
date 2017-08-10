@@ -76,7 +76,14 @@ public class SpearCaptureArea : MonoBehaviour {
 		}
 	}
 
+	bool collected = false;
+
 	void Collect_Spear() {
+		if (collected) {
+			return;
+		}
+
+		collected = true;
 		player.is_capturing_spear = false;
 		
 		StartCoroutine(Destroy_Capture());

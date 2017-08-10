@@ -38,7 +38,6 @@ public class DragonAttackFlameRoar : DragonAttackDeluxe {
 	}
 
 	public IEnumerator Attack() {
-
 		//telegraph
 		sprite.enabled = true;
 		sprite.color = HushPuppy.getColorWithOpacity(sprite.color, 0f);

@@ -85,7 +85,6 @@ public class DragonAttackManager : MonoBehaviour {
 
 		for (int i = 0; i < quantity; i++) {
 			Attack_Throw_Fireball();
-
 			yield return new WaitForSeconds(1f);
 		}
 
@@ -109,15 +108,18 @@ public class DragonAttackManager : MonoBehaviour {
 	}
 
 	public IEnumerator Attack_Physical() {
-		dragon.Set_Turn_Speed_Dampener(3f);
+		yield return dragonAttack_physical.Telegraph();
+		
+		dragon.Set_Turn_Speed_Dampener(2f);
+		yield return dragonAttack_physical.Start_Attack();
 
-		// yield return new WaitForSeconds(0.5f);
+		yield return dragonAttack_physical.End_Attack();
 
-		dragonAttack_physical.Set_Active(true);
+		dragon.Set_Turn_Speed_Dampener(50f);
+		dragon.Stop_Walking();
+		yield return new WaitForSeconds(dragonAttack_physical.stun_duration);
+		dragon.Restart_Walking();
 
-		yield return new WaitForSeconds(2f);
-
-		dragonAttack_physical.Set_Active(false);
 		dragon.Reset_Turn_Speed();
 	}
 
@@ -140,7 +142,6 @@ public class DragonAttackManager : MonoBehaviour {
 	}
 
 	#region Flametower
-
 		Vector2 Get_New_Flame_Tower_Position(List<Vector2> positions) {
 			Vector2 aux = Vector2.zero;
 			int k = 0;
