@@ -205,6 +205,37 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 224669196658770596, guid: 85cecfe73b1fbf74491db52469211b2f,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224669196658770596, guid: 85cecfe73b1fbf74491db52469211b2f,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224669196658770596, guid: 85cecfe73b1fbf74491db52469211b2f,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224669196658770596, guid: 85cecfe73b1fbf74491db52469211b2f,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224669196658770596, guid: 85cecfe73b1fbf74491db52469211b2f,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114835052712126760, guid: 85cecfe73b1fbf74491db52469211b2f,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: eaa4151d49116f24db0442bd54916a63,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85cecfe73b1fbf74491db52469211b2f, type: 2}
   m_IsPrefabParent: 0
@@ -392,6 +423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e15bbec11878e144ae801fa85d691b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  victoryScreen: {fileID: 0}
+  lossScreen: {fileID: 0}
 --- !u!1 &892710444
 GameObject:
   m_ObjectHideFlags: 0
