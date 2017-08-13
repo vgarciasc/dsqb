@@ -88,7 +88,7 @@ public class WeaponSpear : WeaponDeluxe {
 	}
 
 	public void Destroy_Now() {
-		GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren <Player>().current_spears++;
+		GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren <Player>().current_weapons++;
 		Destroy(this.gameObject);
 	}
 

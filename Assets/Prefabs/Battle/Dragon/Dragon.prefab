@@ -535,6 +535,7 @@ MonoBehaviour:
   sprite: {fileID: 212513271010021394}
   telegraph_duration: 2
   attack_duration: 3
+  stun_duration: 2
   hurt_active: 0
   player_in_view: 0
 --- !u!114 &114769036611686614
@@ -629,7 +630,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 1647596199
+  randomSeed: 175084015
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7177,9 +7178,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 9
+  m_SortingLayerID: 693613185
+  m_SortingLayer: 4
+  m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -7227,9 +7228,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayerID: -1685580375
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fb826f0a15f0c8949a1d6b7705476b51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7269,9 +7270,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingLayerID: 693613185
+  m_SortingLayer: 4
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 389d219d06a68c94c93cbfab78c62d35, type: 3}
   m_Color: {r: 0.9117647, g: 0.19442043, b: 0.19442043, a: 1}
   m_FlipX: 0
@@ -7311,8 +7312,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 693613185
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9eaa54419f7d02e4db83a0c0b87f3b04, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0.566}

@@ -163,6 +163,15 @@ public class Dragon : MonoBehaviour {
 			Take_Damage(spear.damage);
 		}
 
+		public void Take_Damage_Knife(WeaponKnife knife) {
+			if (took_hit_invincible) {
+				return;
+			}
+			
+			knife.Fix_Knife_To(this.gameObject);
+			Take_Damage(knife.damage);
+		}
+
 		public void Take_Damage(int amount) {
 			if (took_hit_invincible) {
 				return;

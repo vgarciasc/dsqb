@@ -8,5 +8,8 @@ public class CanFixArrow : MonoBehaviour {
 		if (target.tag == "Arrow") {
 			target.GetComponentInChildren<WeaponArrow>().Fix_Arrow_To(this.gameObject);
 		}
+		if (target.tag == "Knife") {
+			target.GetComponentInChildren<WeaponKnife>().Fix_Knife_To(this.gameObject);
+		}
 	}
 }

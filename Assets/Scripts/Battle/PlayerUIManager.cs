@@ -25,6 +25,8 @@ public class PlayerUIManager : MonoBehaviour {
 	List<Sprite> bow_sprites = new List<Sprite>();
 	[SerializeField]
 	List<Sprite> spear_sprites = new List<Sprite>();
+	[SerializeField]
+	List<Sprite> knife_sprites = new List<Sprite>();
 
 	void Start() {
 		Initialize_Weapon();	
@@ -60,10 +62,14 @@ public class PlayerUIManager : MonoBehaviour {
 			case Weapon.SPEAR:
 				Update_Spear();
 				break;
+			case Weapon.KNIFE:
+				Update_Knife();
+				break;
 		}
 	}
 
 	void Update_Bow() {
+		weapon_quantity.text = "";
 		float unit = 1f / bow_sprites.Count;
 
 		for (int i = 1; i < bow_sprites.Count; i++) {
@@ -79,7 +85,7 @@ public class PlayerUIManager : MonoBehaviour {
 	}
 
 	void Update_Spear() {
-		weapon_quantity.text = "x" + player.current_spears;
+		weapon_quantity.text = "x" + player.current_weapons;
 
 		float unit = 1f / spear_sprites.Count;
 
@@ -93,5 +99,10 @@ public class PlayerUIManager : MonoBehaviour {
 		if (player.charge <= 0.01f) {
 			weapon_indicator.sprite = spear_sprites[0];
 		}
+	}
+
+	void Update_Knife() {
+		weapon_quantity.text = "x" + player.current_weapons;
+		weapon_indicator.sprite = knife_sprites[0];
 	}
 }

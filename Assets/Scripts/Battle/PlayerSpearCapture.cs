@@ -42,7 +42,7 @@ public class PlayerSpearCapture : MonoBehaviour {
 
 	void Get_Spear(GameObject spear) {
 		Destroy (spear);
-		GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren <Player> ().current_spears++;
+		GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren <Player> ().current_weapons++;
 
 		var dragon = GameObject.FindGameObjectWithTag("Dragon");
 

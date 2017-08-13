@@ -9,6 +9,9 @@ TagManager:
   - Spear
   - WorldCanvas
   - SpearCapture
+  - Knife
+  - DragonAttackFireball
+  - Canvas
   layers:
   - Default
   - TransparentFX
@@ -45,4 +48,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 307039725
+    locked: 0
+  - name: Dragon Attack
+    uniqueID: 693613185
+    locked: 0
+  - name: Knife Magnet
+    uniqueID: 4141994683
+    locked: 0
+  - name: Player
+    uniqueID: 317199305
+    locked: 0
+  - name: Dragon
+    uniqueID: 2609386921
     locked: 0

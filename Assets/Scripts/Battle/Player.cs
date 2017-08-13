@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Weapon { BOW, SPEAR };
+public enum Weapon { BOW, SPEAR, KNIFE };
 
 public class Player : MonoBehaviour {
 
@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
 	bool is_charging_shot = false;
 
 	//properties
-	public Weapon current_weapon = Weapon.SPEAR;
+	public Weapon current_weapon = Weapon.KNIFE;
 	public float charge = 0f;
 	public float health = 1f;
 	public float stamina = 1f;
@@ -30,11 +30,19 @@ public class Player : MonoBehaviour {
 	GameObject arrowPrefab;
 	[SerializeField]
 	GameObject spearPrefab;
+	[SerializeField]
+	GameObject knifePrefab;
+	[SerializeField]
+	GameObject knifeMagnetPrefab;
 
 	[Header("Weapons")]
-	public int max_spears = 3;
-	public int current_spears;
+	[HideInInspector]
 	public bool is_capturing_spear = false;
+	[HideInInspector]
+	public bool knife_magnet_deployed = false;
+	public int max_spears = 3;
+	public int max_knifes = 3;
+	public int current_weapons;
 
 	#region Start
 		void Start() {
@@ -49,7 +57,7 @@ public class Player : MonoBehaviour {
 		}
 
 		void Initialize_Properties() {
-			current_spears = max_spears;
+			current_weapons = max_spears;
 		}
 	#endregion
 
@@ -94,9 +102,9 @@ public class Player : MonoBehaviour {
 				if (current_weapon == Weapon.BOW) {
 					speed /= 4f; //if player is charging shot, he gets slower
 				}
-				else if (current_weapon == Weapon.SPEAR) {
-					speed /= 6f;
-				}
+				// else if (current_weapon == Weapon.SPEAR) {
+				// 	speed /= 6f;
+				// }
 			}
 
 			rb.velocity = new Vector2(horizontal, vertical) * speed;
@@ -108,8 +116,11 @@ public class Player : MonoBehaviour {
 					Handle_Weapon_Bow();
 					break;
 				case Weapon.SPEAR:
-					Handle_Weapon_Spear ();
+					Handle_Weapon_Spear();
 					// Handle_Weapon_Spear_Capture ();
+					break;
+				case Weapon.KNIFE:
+					Handle_Weapon_Knife();
 					break;
 			}
 		}
@@ -193,33 +204,8 @@ public class Player : MonoBehaviour {
 				}
 			}
 
-			// void Handle_Weapon_Spear_Capture() {
-			// 	if (Input.GetButtonDown ("Fire2")) {
-			// 		Toggle_Capturing_Spear (true);
-			// 	}
-			// 	if (Input.GetButtonUp ("Fire2")) {
-			// 		Toggle_Capturing_Spear (false);
-			// 	}
-			// }
-		
-			// void Toggle_Capturing_Spear(bool value) {
-			// 	if (value) {
-			// 		Stop_Stamina_Recovery ();
-			// 		is_capturing_spear = true;
-			// 		GetComponentInChildren<PlayerSpearCapture>().Start_Capture ();
-			// 	} else {
-			// 		Start_Stamina_Recovery();
-			// 		is_capturing_spear = false;
-			// 		GetComponentInChildren<PlayerSpearCapture>().End_Capture ();
-			// 	}
-			// }
-
-			public void Gain_Spear() {
-				current_spears = Mathf.Clamp(current_spears + 1, 0, max_spears);
-			}
-
 			void Start_Spear() {
-				if (current_spears <= 0) {
+				if (current_weapons <= 0) {
 					return;
 				}
 
@@ -229,7 +215,7 @@ public class Player : MonoBehaviour {
 			}
 
 			void Release_Spear(float charge) {
-				if (current_spears <= 0) {
+				if (current_weapons <= 0) {
 					return;
 				}
 
@@ -242,7 +228,7 @@ public class Player : MonoBehaviour {
 					return;
 				}
 
-				current_spears--;
+				current_weapons--;
 				GameObject spear = Instantiate(
 					spearPrefab,
 					this.transform.position,
@@ -262,6 +248,100 @@ public class Player : MonoBehaviour {
 					direction.normalized * spearSpeed,
 					ForceMode2D.Impulse
 				);
+			}
+
+			public void Gain_Spear() {
+				current_weapons = Mathf.Clamp(current_weapons + 1, 0, max_spears);
+			}
+		#endregion
+		#region Knife
+			void Handle_Weapon_Knife() {
+				if (Input.GetButton("Fire1")) {
+					Start_Knife();
+				}
+
+				if (Input.GetButtonUp("Fire1")) {
+					Release_Knife(charge);
+				}
+				
+				if (Input.GetButtonDown("Fire2")) {
+					Put_Knife_Magnet();
+				}
+			}
+
+			void Start_Knife() {
+				if (current_weapons <= 0) {
+					return;
+				}
+
+				is_charging_shot = true;
+				Stop_Stamina_Recovery();
+				Add_Charge();
+			}
+
+			void Release_Knife(float charge) {
+				if (current_weapons <= 0) {
+					return;
+				}
+
+				is_charging_shot = false;
+				Reset_Charge();
+				Start_Stamina_Recovery();
+
+				float minimumChargeForBow = 0.33f;
+				if (charge < minimumChargeForBow) {
+					return;
+				}
+
+				current_weapons--;
+				GameObject knife = Instantiate(
+					knifePrefab,
+					this.transform.position,
+					Quaternion.identity
+				);
+
+				float knifeSpeed = 35 * charge;
+
+				Vector2 direction = Vector2.up;
+				direction.x = Mathf.Cos((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
+				direction.y = Mathf.Sin((this.transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad);
+		
+				var rot_aux = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+				knife.transform.rotation = Quaternion.Euler(0f, 0f, rot_aux - 90);
+
+				knife.GetComponentInChildren<Rigidbody2D>().AddForce(
+					direction.normalized * knifeSpeed,
+					ForceMode2D.Impulse
+				);
+			}
+
+			void Put_Knife_Magnet() {
+				if (knife_magnet_deployed) {
+					return;
+				}
+
+				knife_magnet_deployed = true;
+
+				GameObject go = Instantiate(
+					knifeMagnetPrefab,
+					this.transform.position,
+					Quaternion.identity
+				);
+				
+				foreach (GameObject knife in GameObject.FindGameObjectsWithTag("Knife")) {
+					knife.GetComponentInChildren<KnifeIron>().Set_Magnet(
+						go.GetComponentInChildren<KnifeMagnetArea>()
+					);
+				}				
+			}
+
+			public void Collect_Magnet() {
+				StartCoroutine(Collect_Magnet_Cooldown());
+			}
+
+			IEnumerator Collect_Magnet_Cooldown() {
+				yield return HushPuppy.WaitForEndOfFrames(30);
+				knife_magnet_deployed = false;
 			}
 		#endregion
 	#endregion
